@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Currículum Vitae</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src='alertConfig.js'></script>
+</head>
+<body>
+    <header>
+
+      <di v class="divTitulo">
+        
+       <h1 id='title'>Valeria Hernandez</h1> 
+       <img src="billies.jpeg" alt="Foto de perfil">
+
+      </div>
+
+  </header>
+  <main>
+    <section class="personal-info">
+        <h2>Información Personal</h2>
+        <ul>
+            <li><label for="name">Cedula:</label> <span id="name">31730885</span></li>
+            <li><label for="email">Correo Electrónico:</label> <span id="email">Valeriakeydimar17@gmail.com</span></li>
+            <li><label for="phone">Teléfono:</label> <span id="phone">+58424-3384301</span></li>
+        </ul>
+    </section>
+    <section class="education">
+        <h2>Educación</h2>
+        <ul>
+            <li>
+                <label for="degree">Primaria:</label> <span id="degree">Juan German Roscio</span>
+                <label for="degree">Secundaria:</label> <span id="degree">U.N.E. Jose Felix Ribas</span>
+                <label for="university">Universidad:</label> <span id="university">Actualmente estudiando en U.N.E.R.G</span>
+                
+            </li>
+        </ul>
+    </section>
+    <section class="experience">
+        <h2>Experiencia Laboral</h2>
+        <ul>
+            <li>
+                <label for="job-title">Título del Trabajo:</label> <span id="job-title">Desarrollador front-end</span>
+                <label for="company">Compañía:</label> <span id="company">Empresa coflaTecnologi</span>
+                <label for="job-description">Descripción del Trabajo:</label> <span id="job-description">Implementación de servicios API y microServicios AI</span>
+            </li>
+        </ul>
+    </section>
+    <section class="skills">
+        <h2>Habilidades</h2>
+        <ul>
+            <li><label for="skill">Habilidad:</label> <span id="skill">Logica de Programación Intermedio</span></li>
+            <li><label for="skill">Habilidad:</label> <span id="skill">Backend desarrollo de servidores web express.js</span></li>
+            <li><label for="skill">Habilidad:</label> <span id="skill">desarrollo de servicios web responsive</span></li>
+        </ul>
+    </section>
+
+    <section class="formulario">
+        <h2>Contacto :</h2>
+
+        <form action="/contacto" method='post' class="formularioo">
+
+            <div class='divInput'>
+                <label>Nombre</label>
+                <input type="text" name="nombre" placeholder="Ingrese Nombre" required>
+            </div>
+
+            <div class='divInput'>
+                <label>Correo</label>
+                <input type="email" name="email" placeholder="Ingrese Email" required>
+            </div>
+
+            <div class='divInput'>
+                <label>Comentario</label>
+                <input type="text" name="comentario" placeholder="Ingrese Comentario" required>
+            </div>
+
+            <div class='divButton'>
+                <button title="Enviar Mensaje" class='button'>Enviar</button>
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+<script type="text/javascript" src="funcionalidad.js"></script>
+</body>
+</html>
