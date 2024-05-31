@@ -2,6 +2,7 @@ require('dotenv').config();
 const {CLAVESITIO,CLAVESECRETA,PASSWORDAPP} = process.env;
 const express = require('express');
 //let handlebars = require('express-handlebars')
+const cors = require('cors');
 const connectedSockets = new Set();
 const http = require('http');
 const nodemailer = require('nodemailer');
@@ -36,6 +37,8 @@ const transporter = nodemailer.createTransport({
 app.use(express.static(__dirname+'/static'));
 
 //Configuración de las plantillas
+// Habilitar CORS para todas las rutas
+app.use(cors());
 
 app.set('view engine','ejs');//definimos el motor de plantilla con archivos ejs
 app.set('views',path.join(__dirname,"./views"));//definimos la ruta del motor de plantilla
@@ -63,6 +66,7 @@ app.get('/ubicacion', async (req, res) => {
   let lat = req.query.lat;
 
   let lng = req.query.lng;
+  console.log(`lat : ${lat} lng : ${lng}`);
 
   if (!lat || !lng) {
     return res.status(400).json({ error: 'Latitude and longitude are required' });
@@ -92,7 +96,7 @@ try{
   const respuesta = await controllers.add(nombre,email,comentario,ip,pais);
     // Detalles del correo electrónico
   const mailOptions = {
-    from: 'valeriakeydimar17@gmail.com',
+    from:'valeriakeydimar17@gmail.com',
     to: 'programacion2ais@dispostable.com', // Agrega aquí la dirección de correo a la lista de destinatarios
     subject: 'Un usuario a enviado un mensaje',
     text: `Datos del usuario:\n\n
@@ -128,15 +132,6 @@ res.status(500).json({error:'Error en el servidor'});
 });
 //////////////////////////////////////////////////////////////////////
   
-
-  io.on('connection', (socket) => {
-  socket.on('location',(location)=>{
-   console.log(`latitud : ${location.lat} longitud : ${location.lng}`);
-  }) 
-
-});
-
-
 // Otros endpoints y lógica de tu aplicación
 const port = 3000;
 server.listen(port,()=>{
