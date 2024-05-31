@@ -99,7 +99,7 @@ span {
     justify-content:center;
     align-items: center;
     height:30vh;
-    margin:3rem auto;
+    margin:4.5rem auto;
 }
 
 .divInput{
@@ -205,4 +205,10 @@ header {
 }
 
 
+}
+
+.formulario .formularioo .divInput:nth-child(4){
+    display: flex;
+    justify-content:end;
+    align-content: center;
 }

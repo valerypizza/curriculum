@@ -18,6 +18,7 @@ class contactosModel {
       email TEXT NOT NULL,
       comentario TEXT NOT NULL,
       ip TEXT NOT NULL,
+      pais TEXT NOT NULL,
       created_at DATETIME 
     ) 
   `);
@@ -32,9 +33,9 @@ class contactosModel {
 
   }
 
-  add(nombre,email,comentario,ip){
+  add(nombre,email,comentario,ip,pais){
     return new Promise((resolve, reject) => {
-      this.db.run(`INSERT INTO contacto(nombre,email,comentario,ip) VALUES(?,?,?,?)`,[nombre,email,comentario,ip], err => {
+      this.db.run(`INSERT INTO contacto(nombre,email,comentario,ip,pais) VALUES(?,?,?,?,?)`,[nombre,email,comentario,ip,pais], err => {
         if(err){
           reject(err);
         }else{

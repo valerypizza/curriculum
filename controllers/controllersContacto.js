@@ -5,9 +5,9 @@ class ContactosControllers{
 	constructor(){
     //aqui va algo que no sabemos que es aun <[*_*]>
 	}
-	add(nombre,email,comentario,ip){
+	add(nombre,email,comentario,ip,pais){
        return new Promise((resolve,reject)=>{
-       db.add(nombre,email,comentario,ip)
+       db.add(nombre,email,comentario,ip,pais)
        .then(res=>{
        console.log(res,'controllers');
        resolve(res);
