@@ -71,10 +71,15 @@ app.get('/ubicacion', async (req, res) => {
   if (!lat || !lng) {
     return res.status(400).json({ error: 'Latitude and longitude are required' });
   }
-  try {
-    const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,{
+  const config = {
+  headers: {
+    'Referer': 'https://curriculum-upeh.onrender.com', // Establece el Referer personalizado
+    'User-Agent': 'curriculumVitae' // Establece el User-Agent personalizado
+  },
   timeout: 60000 // 60 segundos
-});
+};
+  try {
+    const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,config);
     //res.json(response.data);
     res.cookie('location',response.data.address.country, { httpOnly: true, secure: true });
     res.json(response.data.address.country);
