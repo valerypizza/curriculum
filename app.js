@@ -44,7 +44,7 @@ res.status(500).json({error:'Error en el servidor'});
 });
 
 // Otros endpoints y lógica de tu aplicación
-const port = 3000;
+const port = 5000;
 server.listen(port,()=>{
   console.log(`Servidor Express iniciado en el puerto ${port}`);
 });
