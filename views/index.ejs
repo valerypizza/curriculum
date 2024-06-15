@@ -4,7 +4,12 @@
     <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Currículum Vitae</title>
+    <!--DATOS Open Graph-->
+    <title><%= og.title %></title>
+    <meta name="description" content="<%= og.description %>">
+    <meta property="og:title" content="<%= og.title %>">
+    <meta property="og:description" content="<%= og.description %>">
+    <meta property="og:image" content="<%= og.image %>">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -112,6 +117,11 @@
             <div class='divButton'>
                 <button title="Enviar Mensaje" class='button'>Enviar</button>
             </div>
+            
+             <div class="divButton">
+                  <a title="Inicia sesion con Google" href='/auth/google'><img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" width="150"></a> 
+             </div>
+          
 
         </form>
     </section>

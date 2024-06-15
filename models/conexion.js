@@ -44,6 +44,17 @@ class contactosModel {
       });
     });
   }
+  obtener(){
+    return new Promise((resolve,reject)=>{
+      this.db.all(`SELECT * FROM contacto`,(error,datos)=>{
+       if(!error){
+        resolve(datos);
+       }else{
+        reject(error);
+       }
+      })
+    })
+  }
 
   // Agrega más métodos según tus necesidades, como insertar, actualizar o eliminar registros
 

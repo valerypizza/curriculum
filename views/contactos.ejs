@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="stylesheet" type="text/css" href="contacto.css">
+  <title>Registros</title>
+</head>
+<body>
+
+    <nav>
+      <h1>Registro de Usuarios</h1>
+      <button onclick="redireccionar()">Salir</button>
+    </nav>
+
+    <div class="registro">
+    
+
+      <% datos.forEach(user => { %>
+      
+      <ul>
+
+        <div><span>ID:</span><li><%= user.id %></li></div>
+        <div><span>Nombre:</span><li><%= user.nombre %></li></div>
+        <div><span>Email:</span><li><%= user.email%></li></div>
+        <div><span>Comentario:</span><li><%= user.comentario%></li></div>
+        <div><span>Ip:</span><li><%= user.ip%></li></div>
+        <div><span>Pais:</span><li><%= user.pais%></li></div>
+        <div><span>Fecha:</span><li><%= user.created_at%></li></div>
+       
+     </ul>
+     
+     <% }); %>
+
+</div>
+<script type="text/javascript">
+  const redireccionar = ()=>{
+    window.location.href='/';
+  }
+</script>
+</body>
+</html>

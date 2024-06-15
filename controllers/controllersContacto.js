@@ -19,6 +19,17 @@ class ContactosControllers{
        
        }) 
 	}
+    obtener(){
+        return new Promise((resolve,reject)=>{
+        db.obtener()
+        .then(res=>{
+        resolve(res)
+        })
+        .catch(error=>{
+        reject(error);
+        })
+        })
+    }
 }
 
 module.exports=ContactosControllers;

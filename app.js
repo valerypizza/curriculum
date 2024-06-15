@@ -1,6 +1,7 @@
 require('dotenv').config();
-const {CLAVESITIO,CLAVESECRETA,PASSWORDAPP} = process.env;
+const {CLAVESITIO,CLAVESECRETA,PASSWORDAPP,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET} = process.env;
 const express = require('express');
+const session = require('express-session');
 //let handlebars = require('express-handlebars')
 const cors = require('cors');
 const connectedSockets = new Set();
@@ -8,13 +9,49 @@ const http = require('http');
 const nodemailer = require('nodemailer');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const app = express();
 const axios = require('axios');
 const Controllers = require('./controllers/controllersContacto.js');
 const controllers = new Controllers();
 const Recaptcha = require('express-recaptcha').RecaptchaV2;
 const recaptcha = new Recaptcha(CLAVESITIO,CLAVESECRETA);
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//configuracion de transporter
+/////////////////////////////////////////////////////
+const passport = require('passport');
+const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 
+passport.use(new GoogleStrategy({
+    clientID:GOOGLE_CLIENT_ID,
+    clientSecret:GOOGLE_CLIENT_SECRET,
+    callbackURL:"http://localhost:5000/google/callback",
+    passReqToCallback:true
+  },
+  function(request, accessToken, refreshToken, profile, done) {
+      return done(null,profile); 
+  }
+));
+
+passport.serializeUser(function(user,done){
+  done(null,user)
+});
+
+passport.deserializeUser(function(user,done){
+  done(null,user)
+});
+
+/////////////////////////////////////////////////////
+function isLoggedIn(req,res,next){
+  req.user ? next() : res.sendStatus(401);
+}
+//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+//////////////////////////////////////////////
+const app = express();
+app.use(session({secret:"cats"}));
+app.use(passport.initialize());
+app.use(passport.session());
+/////////////////////////////////////////////////////
 const BaseDatos = require('./models/conexion.js');
 
 const db = new BaseDatos();
@@ -33,6 +70,7 @@ const transporter = nodemailer.createTransport({
     pass:PASSWORDAPP
   }
 });
+
 //recursos que se van a cargar en el server 
 app.use(express.static(__dirname+'/static'));
 
@@ -48,17 +86,39 @@ app.use(cookieParser());
 app.use(express.json());
 // Rutas y lógica de tu aplicación
 
-
 app.get('/', async (req, res) => {
   try {
-    res.render('index');
+    res.render('index',{og: {
+      title: 'Mi Currículum Vitae',
+      description:'Prueba',
+      image: 'https://www.pexels.com/es-es/foto/persona-sosteniendo-un-smartphone-android-samsung-blanco-6347724/',
+      // Otros metadatos OGP que desees especificar
+      }});
   } catch (err){
     res.status(500).json({error:'Error el en servidor'});
   }
 });
-
 //////////////////////////////////////////////////////////
-
+//autenticar con oauth....
+app.get('/auth/google',
+  passport.authenticate('google',{scope:['email','profile']})
+);
+//////////////////////////////////////////////////////////
+app.get('/google/callback',
+  passport.authenticate('google',{
+  successRedirect:'/protected',
+  failureRedirect:'/auth/failure'
+  })
+);
+//////////////////////////////////////////////////////////
+app.get('/auth/failure',(req,res)=>{
+ res.send('Error al autenticar , ya que ha ingresado un correo electronico que no se encuentra registrado en la configuracion de consentimientos de OAut2 , por lo tanto debes tener en cuenta que esta metodologia se realizo basada en modo prueba , para mayor informacion revise encarecidamente la documentacion de autenticación con OAut , (¡OJO , no se trata de un error!)');
+});
+//////////////////////////////////////////////////////////
+app.get('/protected',isLoggedIn,async (req,res)=>{
+const datos = await controllers.obtener();
+ res.render('contactos',{datos});
+});
 //////////////////////////////////////////////////////////
 
 app.get('/ubicacion', async (req, res) => {
@@ -76,7 +136,7 @@ app.get('/ubicacion', async (req, res) => {
     'Referer': 'https://curriculum-upeh.onrender.com', // Establece el Referer personalizado
     'User-Agent': 'curriculumVitae' // Establece el User-Agent personalizado
   },
-  timeout: 60000 // 60 segundos
+  timeout:60000 // 60 segundos
 };
   try {
     const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,config);
@@ -123,7 +183,7 @@ try{
 
   });
   console.log(`Respuesta de controlador : ${respuesta}`);
-  res.status(200);
+  res.status(200);  
   } else{
     // El reCAPTCHA no se ha verificado correctamente
     res.send('Error en el reCAPTCHA');
@@ -138,7 +198,7 @@ res.status(500).json({error:'Error en el servidor'});
 //////////////////////////////////////////////////////////////////////
   
 // Otros endpoints y lógica de tu aplicación
-const port = 3000;
+const port = 5000;
 server.listen(port,()=>{
   console.log(`Servidor Express iniciado en el puerto ${port}`);
 });

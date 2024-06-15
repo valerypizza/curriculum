@@ -1,0 +1,64 @@
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+body{
+background:rgb(240, 244, 249);
+}
+nav{
+	display: flex;
+	justify-content:space-between;
+	background:rgba(0,0,0,.7);
+	backdrop-filter: blur(10px);
+	padding:2rem;
+}
+nav button{
+width:10%;
+border-radius:8px;
+cursor: pointer;
+}
+nav button:hover{
+	background:rgb(200,200,200);
+}
+nav h1{
+	color:white;
+	font-style: italic;
+	font-size:2rem;
+}
+
+.registro{
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	width:100%;
+	height:auto;
+	padding:1rem;
+	gap:20px;
+	
+}
+.registro ul div{
+display: flex;
+justify-content:center;
+width:100%;
+margin-top:.7rem;
+}
+.registro ul div span{
+width: 100%;
+}
+.registro ul div li{
+width: 100%;
+}
+.registro ul{
+	width:30%;
+	height:50vh;
+    list-style: none;
+    padding:2rem;
+    background:rgb(0,0,0,.7);
+    color: white;
+    font-size: 1.2rem;
+    font-style: italic;
+    padding:1rem;
+    border-radius:10px;
+    border:7px solid rgb(200, 200, 200);
+}
